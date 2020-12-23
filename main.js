@@ -15,7 +15,9 @@ try {
     };
 }
 
-var output_type = "text";
+var program_options = {
+    output_type: 'text'
+}
 
 class FightResult {
     constructor(name_input) {
@@ -381,14 +383,25 @@ function completed(fights) {
         }
     });
 
-    if( output_type == "text" ){
+    let output_data = '';
+
+    if( program_options.output_type == "text" ){
         Object.keys(results).forEach(function (key) {
-            console.log(results[key].prettyPrint());
+            output_data = results[key].prettyPrint();
+            
         });
-    }else if( output_type == "csv" ){
+    }else if( program_options.output_type == "csv" ){
         console.log(FightResult.getHeader(','))
         Object.keys(results).forEach(function (key) {
-            console.log(results[key].prettyPrintCSV(','));
+            output_data = results[key].prettyPrintCSV(',');
+        });
+    }
+
+    if( program_options.file_name == '' ){
+        console.log(output_data);
+    }else{
+        fs.writeFile(program_options.file_name, output_data, 'utf8', () => {
+            console.log("Output saved to: " + program_options.file_name);
         });
     }
 
@@ -424,6 +437,13 @@ const argv = yargs
         alias: 'u',
         type: 'string'
     })
+    .option("file_name", {
+        description: "Output filename",
+        alias: 'f',
+        type: 'string',
+        default: ''
+    })
+    .conflicts('guild', 'user')
     .command('csv', "Produce CSV output")
     .help()
     .alias('help', 'h')
@@ -432,8 +452,10 @@ const argv = yargs
 function run() {
 
     if( argv.csv){
-        output_type = "csv";
+        program_options.output_type = "csv";
     }
+
+    program_options.file_name = argv.file_name;
 
     if (argv.guild) {
         getReportListGuild(argv.guild_name, argv.guild_server, argv.guild_region).then(handle_id_list);
