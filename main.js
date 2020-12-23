@@ -166,7 +166,6 @@ class FightResult {
         if (!(this.unknownKillsFDTM === undefined)) {
             output += new Date(this.unknownKillsFDTM);
         }
-        output += '\n';
         return output;
     }
 
@@ -213,7 +212,6 @@ class FightResult {
         output += "First Unknown Wipe";
         output += separator;
         output += "First Unknown Kill";
-        output += '\n';
         return output;
     }
 
