@@ -392,7 +392,7 @@ function completed(fights) {
     }else if( program_options.output_type == "csv" ){
         output_data += FightResult.getHeader(',') + '\n';
         Object.keys(results).forEach(function (key) {
-            output_data += results[key].prettyPrintCSV(',') = '\n';
+            output_data += results[key].prettyPrintCSV(',') + '\n';
         });
     }
 
