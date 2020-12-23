@@ -387,13 +387,12 @@ function completed(fights) {
 
     if( program_options.output_type == "text" ){
         Object.keys(results).forEach(function (key) {
-            output_data = results[key].prettyPrint();
-            
+            output_data += results[key].prettyPrint();
         });
     }else if( program_options.output_type == "csv" ){
-        console.log(FightResult.getHeader(','))
+        output_data += FightResult.getHeader(',');
         Object.keys(results).forEach(function (key) {
-            output_data = results[key].prettyPrintCSV(',');
+            output_data += results[key].prettyPrintCSV(',');
         });
     }
 
