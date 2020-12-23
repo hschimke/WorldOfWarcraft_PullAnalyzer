@@ -15,6 +15,8 @@ try {
     };
 }
 
+var output_type = "text";
+
 class FightResult {
     constructor(name_input) {
         this.name = name_input;
@@ -98,6 +100,120 @@ class FightResult {
             output += "\n\t";
             output += "First Unknown Kill: " + new Date(this.unknownKillsFDTM);
         }
+        return output;
+    }
+
+    prettyPrintCSV(separator) {
+        let output = '';
+        output += this.name;
+        output += separator;
+        output += this.normalKills;
+        output += separator;
+        output += this.normalWipes;
+        output += separator;
+        if (!(this.normalWipesFDTM === undefined)) {
+            output += new Date(this.normalWipesFDTM);
+        }
+        output += separator;
+        if (!(this.normalKillsFDTM === undefined)) {
+            output += new Date(this.normalKillsFDTM);
+        }
+        output += separator;
+        output += this.heroicKills;
+        output += separator;
+        output += this.heroicWipes;
+        output += separator;
+        if (!(this.heroicWipesFDTM === undefined)) {
+            output += new Date(this.heroicWipesFDTM);
+        }
+        output += separator;
+        if (!(this.heroicKillsFDTM === undefined)) {
+            output += new Date(this.heroicKillsFDTM);
+        }
+        output += separator;
+        output += this.mythicKills;
+        output += separator;
+        output += this.mythicWipes;
+        output += separator;
+        if (!(this.mythicWipesFDTM === undefined)) {
+            output += new Date(this.mythicWipesFDTM);
+        }
+        output += separator;
+        if (!(this.mythicKillsFDTM === undefined)) {
+            output += new Date(this.mythicKillsFDTM);
+        }
+        output += separator;
+        output += this.raiderfinderKills;
+        output += separator;
+        output += this.raidfinderWipes;
+        output += separator;
+        if (!(this.raidfinderWipesFDTM === undefined)) {
+            output += new Date(this.raidfinderWipesFDTM);
+        }
+        output += separator;
+        if (!(this.raidfinderKillsFDTM === undefined)) {
+            output += new Date(this.raidfinderKillsFDTM);
+        }
+        output += separator;
+        output += this.unknownKills;
+        output += separator;
+        output += this.unknownWipes;
+        output += separator;
+        if (!(this.unknownWipesFDTM === undefined)) {
+            output += new Date(this.unknownWipesFDTM);
+        }
+        output += separator;
+        if (!(this.unknownKillsFDTM === undefined)) {
+            output += new Date(this.unknownKillsFDTM);
+        }
+        output += '\n';
+        return output;
+    }
+
+    static getHeader(separator){
+        let output = '';
+        output += 'Fight';
+        output += separator;
+        output += "Normal Kills";
+        output += separator;
+        output += "Normal Wipes";
+        output += separator;
+        output += "First Normal Wipe"
+        output += separator;
+        output += "First Normal Kill";
+        output += separator;
+        output += "Heroic Kills";
+        output += separator;
+        output += "Heroic Wipes";
+        output += separator;
+        output += "First Heroic Wipe";
+        output += separator;
+        output += "First Heroic Kill";
+        output += separator;
+        output += "Mythic Kills";
+        output += separator;
+        output += "Mythic Wipes";
+        output += separator;
+        output += "First Mythic Wipe";
+        output += separator;
+        output += "First Mythic Kill";
+        output += separator;
+        output += "RF Kills";
+        output += separator;
+        output += "RF Wipes";
+        output += separator;
+        output += "First RF Wipe";
+        output += separator;
+        output += "First RF Kill";
+        output += separator;
+        output += "Unknown Kills";
+        output += separator;
+        output += "Unknown Wipes";
+        output += separator;
+        output += "First Unknown Wipe";
+        output += separator;
+        output += "First Unknown Kill";
+        output += '\n';
         return output;
     }
 
@@ -267,9 +383,16 @@ function completed(fights) {
         }
     });
 
-    Object.keys(results).forEach(function (key) {
-        console.log(results[key].prettyPrint());
-    });
+    if( output_type == "text" ){
+        Object.keys(results).forEach(function (key) {
+            console.log(results[key].prettyPrint());
+        });
+    }else if( output_type == "csv" ){
+        console.log(FightResult.getHeader(','))
+        Object.keys(results).forEach(function (key) {
+            console.log(results[key].prettyPrintCSV(','));
+        });
+    }
 
     saveData();
 }
@@ -303,11 +426,17 @@ const argv = yargs
         alias: 'u',
         type: 'string'
     })
+    .command('csv', "Produce CSV output")
     .help()
     .alias('help', 'h')
     .argv;
 
 function run() {
+
+    if( argv.csv){
+        output_type = "csv";
+    }
+
     if (argv.guild) {
         getReportListGuild(argv.guild_name, argv.guild_server, argv.guild_region).then(handle_id_list);
     } else if (argv.user) {
