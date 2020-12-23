@@ -21,6 +21,8 @@ Simple invocation for a guild:
 Simple invocation for a user
 `node main.js --user --user_name 'WCL_USERNAME'`
 
+Appending `--csv` to the command line will cause the program to output a csv file.
+
 To work the program needs a [Warcraft Logs API key](https://www.warcraftlogs.com/api/docs) stored in a file called 'secrets.json' with the format
 `{"keys":{"api_key":"KEY"}}`
 
