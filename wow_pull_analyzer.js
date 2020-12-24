@@ -282,43 +282,40 @@ function getReportListGuild(guildname, guildserver, guildregion) {
 }
 
 async function getReportListFromURL(url) {
-    return new Promise((resolve, reject) => {
-
-        try{
-            const response = await got(url, options);
-            if( response.statusCode == 200 ){
-                let ids = [];
-                body.forEach((item) => {
-                    ids.push(item['id']);
-                });
-                resolve(ids);
-            }
-        }catch (error){
-            reject(error);
+    let ids = [];    
+    try{
+        const response = await got(url, options);
+        if( response.statusCode == 200 ){
+            body.forEach((item) => {
+                ids.push(item['id']);
+            });
         }
-    });
+    }catch (error){
+        console.log(error);
+    }
+    return ids;
 }
 
 async function getReport(id, report_db) {
     //console.log(`Getting Report: ${id} from ${base_uri+report_api+id+api_key}`);
-    return new Promise((resolve, reject) => {
-        if (report_db.fetched_report_ids.includes(id)) {
-            cache_hits++;
-            resolve(report_db.fetched_reports[id]);
-        } else {
-            try{
-                const response = await got( base_uri + report_api + id + api_key, options );
-                if (response.statusCode == 200) {
-                    cache_misses++;
-                    report_db.fetched_report_ids.push(id);
-                    report_db.fetched_reports[id] = body;
-                    resolve(report_db.fetched_reports[id]);
-                }
-            } catch(error){
-                reject(error);
+    let ret_value = {};
+    if (report_db.fetched_report_ids.includes(id)) {
+        cache_hits++;
+        ret_value = report_db.fetched_reports[id];
+    } else {
+        try{
+            const response = await got( base_uri + report_api + id + api_key, options );
+            if (response.statusCode == 200) {
+                cache_misses++;
+                report_db.fetched_report_ids.push(id);
+                report_db.fetched_reports[id] = body;
+                ret_value = report_db.fetched_reports[id];
             }
+        } catch(error){
+            console.log(error);
         }
-    });
+    }
+    return ret_value;
 }
 
 function handle_id_list(data) {
