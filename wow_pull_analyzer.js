@@ -1,4 +1,4 @@
-const request = require('request');
+const got = require('got');
 const yargs = require('yargs');
 const fs = require('fs');
 
@@ -265,7 +265,7 @@ const report_list_api_guild = '/reports/guild/';
 const report_api = '/report/fights/';
 
 let options = {
-    json: true,
+    responseType: 'json',
     headers: {
         'Connection': 'keep-alive'
     }
@@ -284,18 +284,18 @@ function getReportListGuild(guildname, guildserver, guildregion) {
 function getReportListFromURL(url) {
     return new Promise((resolve, reject) => {
 
-        request(url, options, (error, res, body) => {
-            if (error) {
-                reject(error);
-            };
-            if (!error && res.statusCode == 200) {
+        try{
+            const response = await got(url, options);
+            if( response.statusCode == 200 ){
                 let ids = [];
                 body.forEach((item) => {
                     ids.push(item['id']);
                 });
                 resolve(ids);
-            };
-        });
+            }
+        }catch (error){
+            reject(error);
+        }
     });
 }
 
@@ -306,17 +306,17 @@ function getReport(id, report_db) {
             cache_hits++;
             resolve(report_db.fetched_reports[id]);
         } else {
-            request(base_uri + report_api + id + api_key, options, (error, res, body) => {
-                if (error) {
-                    reject(error);
-                };
-                if (!error && res.statusCode == 200) {
+            try{
+                const response = await got( base_uri + report_api + id + api_key, options );
+                if (response.statusCode == 200) {
                     cache_misses++;
                     report_db.fetched_report_ids.push(id);
                     report_db.fetched_reports[id] = body;
                     resolve(report_db.fetched_reports[id]);
-                };
-            });
+                }
+            } catch(error){
+                reject(error);
+            }
         }
     });
 }
