@@ -286,7 +286,7 @@ async function getReportListFromURL(url) {
     try{
         const response = await got(url, options);
         if( response.statusCode == 200 ){
-            body.data.forEach((item) => {
+            response.body.forEach((item) => {
                 ids.push(item['id']);
             });
         }
@@ -308,7 +308,7 @@ async function getReport(id, report_db) {
             if (response.statusCode == 200) {
                 cache_misses++;
                 report_db.fetched_report_ids.push(id);
-                report_db.fetched_reports[id] = body.data;
+                report_db.fetched_reports[id] = response.body;
                 ret_value = report_db.fetched_reports[id];
             }
         } catch(error){
