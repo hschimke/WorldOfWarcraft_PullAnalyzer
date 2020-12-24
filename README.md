@@ -16,10 +16,10 @@ Other planned additions include:
 * Limit results to specific fights
 
 Simple invocation for a guild:
-`node main.js --guild --guild_name 'NAME' --guild_server 'SERVER' --guild_region 'REGION'`
+`node wow_pull_analyzer.js --guild --guild_name 'NAME' --guild_server 'SERVER' --guild_region 'REGION'`
 
 Simple invocation for a user
-`node main.js --user --user_name 'WCL_USERNAME'`
+`node wow_pull_analyzer.js --user --user_name 'WCL_USERNAME'`
 
 Appending `--csv` to the command line will cause the program to output a csv file.
 
