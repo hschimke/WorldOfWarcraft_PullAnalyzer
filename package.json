@@ -1,0 +1,32 @@
+{
+  "name": "worldofwarcraft_pullanalyzer",
+  "version": "2020.12.24",
+  "description": "World of Warcraft, Warcraft Logs, boss pull analyzer.",
+  "main": "wow_pull_analyzer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hschimke/WorldOfWarcraft_PullAnalyzer.git"
+  },
+  "keywords": [
+    "games",
+    "world",
+    "of",
+    "warcraft",
+    "warcraft",
+    "logs",
+    "warcraft"
+  ],
+  "author": "Henry Schimke",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/hschimke/WorldOfWarcraft_PullAnalyzer/issues"
+  },
+  "homepage": "https://github.com/hschimke/WorldOfWarcraft_PullAnalyzer#readme",
+  "dependencies": {
+    "request": "^2.88.2",
+    "yargs": "^16.2.0"
+  }
+}
