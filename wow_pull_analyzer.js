@@ -281,7 +281,7 @@ function getReportListGuild(guildname, guildserver, guildregion) {
     return getReportListFromURL(base_uri + report_list_api_guild + guildname + "/" + guildserver + "/" + guildregion + api_key);
 }
 
-function getReportListFromURL(url) {
+async function getReportListFromURL(url) {
     return new Promise((resolve, reject) => {
 
         try{
@@ -299,7 +299,7 @@ function getReportListFromURL(url) {
     });
 }
 
-function getReport(id, report_db) {
+async function getReport(id, report_db) {
     //console.log(`Getting Report: ${id} from ${base_uri+report_api+id+api_key}`);
     return new Promise((resolve, reject) => {
         if (report_db.fetched_report_ids.includes(id)) {
