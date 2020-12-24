@@ -107,7 +107,7 @@ class FightResult {
 
     prettyPrintCSV(separator) {
         let output = '';
-        output += this.name;
+        output += '"' + this.name + '"';
         output += separator;
         output += this.normalKills;
         output += separator;
