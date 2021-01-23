@@ -25,7 +25,6 @@ Appending `--csv` to the command line will cause the program to output a csv fil
 
 To save the output to a file instead of dumping it to the console use the option `--file_name <file>`. This option is currently most useful in conjuction with the `--csv` option.
 
-To work the program needs a [Warcraft Logs API key](https://www.warcraftlogs.com/api/docs) stored in a file called 'secrets.json' with the format
-`{"keys":{"api_key":"KEY"}}`
+To work the program needs a [Warcraft Logs API key](https://www.warcraftlogs.com/api/docs) available in the environment as API_KEY. 
 
 To avoid unecessary calls to the Warcraft Logs api the program caches responses in the db.json file that it creates. To force the program to fetch all the data again delete the db.json file that it creates and re-run it.

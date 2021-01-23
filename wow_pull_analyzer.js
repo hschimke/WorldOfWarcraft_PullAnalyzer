@@ -1,8 +1,10 @@
-const got = require('got');
-const yargs = require('yargs');
-const fs = require('fs');
+import got from 'got';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+import fs from 'fs';
 
-const secrets = require('./secrets.json');
+//const secrets = require('./secrets.json');
+const secrets = {'keys':{'api_key':process.env.API_KEY}};
 
 var cached_reports;
 
@@ -410,7 +412,7 @@ function saveData() {
     });
 }
 
-const argv = yargs
+const argv = yargs(hideBin(process.argv))
     .command('guild', 'Process data for a guild')
     .option('guild_name', {
         description: 'The name of the guild to process',
