@@ -2,6 +2,7 @@ import got from 'got';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import fs from 'fs';
+import fs_prom from 'fs/promises';
 
 //const secrets = require('./secrets.json');
 const secrets = {'keys':{'api_key':process.env.API_KEY}};
@@ -9,7 +10,7 @@ const secrets = {'keys':{'api_key':process.env.API_KEY}};
 var cached_reports;
 
 try {
-    cached_reports = require('./db.json');
+	cached_reports = JSON.parse(await fs_prom.readFile(new URL('db.json', import.meta.url)));
 } catch (e) {
     cached_reports = {
         fetched_report_ids: [],
