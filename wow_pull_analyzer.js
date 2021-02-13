@@ -4,13 +4,13 @@ import { hideBin } from 'yargs/helpers';
 import fs from 'fs';
 import fs_prom from 'fs/promises';
 
-//const secrets = require('./secrets.json');
-const secrets = {'keys':{'api_key':process.env.API_KEY}};
+const secrets = { 'keys': { 'api_key': process.env.API_KEY } };
+const DB_FILE = 'db.json';
 
-var cached_reports;
+let cached_reports;
 
 try {
-	cached_reports = JSON.parse(await fs_prom.readFile(new URL('db.json', import.meta.url)));
+    cached_reports = JSON.parse(await fs_prom.readFile(new URL(DB_FILE, import.meta.url)));
 } catch (e) {
     cached_reports = {
         fetched_report_ids: [],
@@ -18,7 +18,7 @@ try {
     };
 }
 
-var program_options = {
+let program_options = {
     output_type: 'text'
 }
 
@@ -174,7 +174,7 @@ class FightResult {
         return output;
     }
 
-    static getHeader(separator){
+    static getHeader(separator) {
         let output = '';
         output += 'Fight';
         output += separator;
@@ -267,7 +267,7 @@ const report_list_api_user = '/reports/user/';
 const report_list_api_guild = '/reports/guild/';
 const report_api = '/report/fights/';
 
-let options = {
+const options = {
     responseType: 'json',
     headers: {
         'Connection': 'keep-alive'
@@ -285,15 +285,15 @@ function getReportListGuild(guildname, guildserver, guildregion) {
 }
 
 async function getReportListFromURL(url) {
-    let ids = [];    
-    try{
+    let ids = [];
+    try {
         const response = await got(url, options);
-        if( response.statusCode == 200 ){
+        if (response.statusCode == 200) {
             response.body.forEach((item) => {
                 ids.push(item['id']);
             });
         }
-    }catch (error){
+    } catch (error) {
         console.log(error);
     }
     return ids;
@@ -306,15 +306,15 @@ async function getReport(id, report_db) {
         cache_hits++;
         ret_value = report_db.fetched_reports[id];
     } else {
-        try{
-            const response = await got( base_uri + report_api + id + api_key, options );
+        try {
+            const response = await got(base_uri + report_api + id + api_key, options);
             if (response.statusCode == 200) {
                 cache_misses++;
                 report_db.fetched_report_ids.push(id);
                 report_db.fetched_reports[id] = response.body;
                 ret_value = report_db.fetched_reports[id];
             }
-        } catch(error){
+        } catch (error) {
             console.log(error);
         }
     }
@@ -385,20 +385,20 @@ function completed(fights) {
 
     let output_data = '';
 
-    if( program_options.output_type == "text" ){
+    if (program_options.output_type == "text") {
         Object.keys(results).forEach(function (key) {
             output_data += results[key].prettyPrint() + '\n';
         });
-    }else if( program_options.output_type == "csv" ){
+    } else if (program_options.output_type == "csv") {
         output_data += FightResult.getHeader(',') + '\n';
         Object.keys(results).forEach(function (key) {
             output_data += results[key].prettyPrintCSV(',') + '\n';
         });
     }
 
-    if( program_options.file_name == '' ){
+    if (program_options.file_name == '') {
         console.log(output_data);
-    }else{
+    } else {
         fs.writeFile(program_options.file_name, output_data, 'utf8', () => {
             console.log("Output saved to: " + program_options.file_name);
         });
@@ -450,7 +450,7 @@ const argv = yargs(hideBin(process.argv))
 
 function run() {
 
-    if( argv.csv){
+    if (argv.csv) {
         program_options.output_type = "csv";
     }
 

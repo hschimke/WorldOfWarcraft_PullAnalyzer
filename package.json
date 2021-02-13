@@ -1,10 +1,11 @@
 {
   "name": "worldofwarcraft_pullanalyzer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "World of Warcraft, Warcraft Logs, boss pull analyzer.",
   "main": "wow_pull_analyzer.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cli": "node -r dotenv/config wow_pull_analyzer.js"
   },
   "repository": {
     "type": "git",
