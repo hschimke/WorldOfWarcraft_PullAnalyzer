@@ -106,3 +106,4 @@ dist
 # secrets files
 secrets.json
 db.json
+runs/
