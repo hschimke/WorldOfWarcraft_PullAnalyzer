@@ -271,6 +271,12 @@ const options = {
     responseType: 'json',
     headers: {
         'Connection': 'keep-alive'
+    },
+    method: 'GET',
+    dnsCache: true,
+    retry: 2,
+    timeout: {
+        request: 10000
     }
 };
 
