@@ -5,7 +5,7 @@
   "main": "wow_pull_analyzer.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "cli": "node -r dotenv/config wow_pull_analyzer.js"
+    "cli": "tsc && node -r dotenv/config ./dist/wow_pull_analyzer.js"
   },
   "repository": {
     "type": "git",
@@ -27,9 +27,13 @@
   },
   "homepage": "https://github.com/hschimke/WorldOfWarcraft_PullAnalyzer#readme",
   "dependencies": {
+    "@types/node": "^16.10.2",
+    "@types/yargs": "^17.0.3",
     "dotenv": "^10.0.0",
     "got": "^11.8.2",
+    "typescript": "^4.4.3",
     "yargs": "^17.2.1"
   },
-  "type": "module"
+  "type": "module",
+  "types": "src/wow_pull_analyzer.d.ts"
 }
