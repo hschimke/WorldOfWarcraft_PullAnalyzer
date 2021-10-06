@@ -1,6 +1,6 @@
 {
   "name": "worldofwarcraft_pullanalyzer",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "World of Warcraft, Warcraft Logs, boss pull analyzer.",
   "main": "./dist/wow_pull_analyzer.js",
   "scripts": {
