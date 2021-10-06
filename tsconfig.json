@@ -12,6 +12,7 @@
     "useUnknownInCatchVariables": true,
   },
   "include": [
-    "./src/**/*"
+    "./src/**/*",
+    "types/wow_pull_analyzer.d.ts"
   ]
 }
